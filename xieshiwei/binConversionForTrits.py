@@ -44,34 +44,15 @@ class binConversionForTrits(object):
         new_dict = dict()
         for key in json_dict:
             letter_string = json_dict.get(key)
+            trits=list()
+            trits_list=list()
             for letter in letter_string:
-                trits=list()
-                reverse_trits=list()
-                trits_list = list()
-                # Convert a string to a binary
-                binary = bin(ord(letter)).replace("0b", '')
-                # Convert binary to decimal
-                decimal_number = int(binary, 2)
-                # Decimal to balanced ternary
-                if decimal_number < 0:
-                    while decimal_number != 0:
-                        integer_part = math.floor(round(decimal_number / 3, 1) + 0.5)
-                        remainder=int(decimal_number - (integer_part * 3))
-                        trits.append(remainder)
-                        reverse_trits=list(reversed(trits))
-                        decimal_number = integerPart
-                    trits_list.append(reverse_trits)
-                else:
-                    while (decimal_number != 0):
-                        # Round
-                        integer_part = math.floor(round(decimal_number / 3, 1) + 0.5)
-                        # Residual
-                        remainder = int(decimal_number - (integer_part * 3))
-                        trits.append(remainder)
-                        reverse_trits = list(reversed(trits))
-                        decimal_number = integer_part
-                    trits_list.append(reverse_trits)
-            new_dict[key] = reverse_trits
+                # Find the corresponding index in the ascll table
+                index = ord(letter)
+                # Returns the corresponding balanced ternary
+                trits = self.BYTE_TO_TRITS_MAPPINGS[index]
+                trits_list.append(trits)
+            new_dict[key]=trits_list
         return new_dict
 
     def helper(self, json_string):

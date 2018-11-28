@@ -4,7 +4,7 @@ import json
 import operator
 from functools import reduce
 
-class binConversionForTrits(object):
+class json_to_trytes(object):
     def __init__(self):
         self.RADIX = 3
         self.MAX_TRIT_VALUE = (self.RADIX - 1) / 2
@@ -36,13 +36,13 @@ class binConversionForTrits(object):
                     break
             self.TRYTE_TO_TRITS_MAPPINGS[i] = trits2[:]
 
-    def getDict(self, json_string):
+    def get_dict(self, json_string):
         # Convert json to a dictionary table
         json_dict = dict()
         json_dict = json.loads(json_string)
         return json_dict
 
-    def fromBinDicToTriDict(self, json_dict):
+    def bindict_to_tridict(self, json_dict):
         new_dict = dict()
         for key in json_dict:
             letter_string = json_dict.get(key)
@@ -55,7 +55,7 @@ class binConversionForTrits(object):
             new_dict[key] = trits_list
             return new_dict
 
-        def fromTriDictTotrytes(self, new_dict):
+        def tridict_to_trytes(self, new_dict):
             one_dimensional_list = list()
             two_dimensional_list = list()
             trytes = ""
@@ -67,7 +67,6 @@ class binConversionForTrits(object):
                         one_dimensional_list.append(0, 0)
                     if remainder == 2:
                         one_dimensional_list.append(0)
-                    # Convert a two-dimensional list to a one-dimensional
                     for i in range(0, len(one_dimensional_list), 3):
                         two_dimensional_list.append(one_dimensional_list[i:i + 3])
                     for values in two_dimensional_list:
@@ -83,12 +82,12 @@ class binConversionForTrits(object):
                         trytes += tryte
             return trytes
 
-        def helper(self, json_string):
-            json_dict = self.getDict(json_string)
-            new_dict = self.fromBinDicToTriDict(json_dict)
-            return self.fromTriDictTotrytes(new_dict)
+        def json_to_trytes_api(self, json_string):
+            json_dict = self.get_dict(json_string)
+            new_dict = self.bindict_to_tridict(json_dict)
+            return self.tridict_to_trytes(new_dict)
 
-        if __name__ == "__main__":
-            obj = binConversionForTrits()
-            print(obj.helper('{"addr":"i02jsdsil"}'))
+    if __name__ == "__main__":
+        obj = json_to_trytes()
+        print(obj.json_to_trytes_api('{"addr":"is2l"}'))
 
